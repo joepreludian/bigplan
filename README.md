@@ -30,7 +30,7 @@ To update later: drop a new `bigspec.skill` over the existing dir, or `rm -rf ~/
 If you want to follow upstream changes or iterate on the skill yourself:
 
 ```bash
-git clone https://github.com/jon-dev-br/bigspec ~/code/bigspec   # or wherever
+git clone https://github.com/joepreludian/bigplan ~/code/bigspec   # or wherever
 ln -s ~/code/bigspec ~/.claude/skills/bigspec
 ```
 
