@@ -1,0 +1,96 @@
+{
+  "skill_name": "bigspec",
+  "evals": [
+    {
+      "id": 1,
+      "name": "explicit-big-plan-trigger",
+      "prompt": "ok i need a big plan for adding project boards to our app. users should be able to create boards, drag cards between columns, share a board with a public read-only link, and get a weekly digest email of activity on boards they own. our stack is rails 7 on the backend and next.js (app router) on the frontend, postgres, devise for auth. we deploy to fly.io. nothing else exists yet for this feature.",
+      "expected_output": "Skill triggers; INDEX.md plus 5+ TOPLAN files written; backend tier 01-09, frontend 10-19; transcript names all four lifecycle states and both gates; no BRAINSTORMED/AVAILABLE/code yet (stops at Step 3).",
+      "files": [],
+      "assertions": [
+        {"id": "trigger", "text": "INDEX.md exists somewhere under outputs/"},
+        {"id": "phase-progress-block", "text": "INDEX.md contains all three phase counters (specs brainstormed / plans written / slices shipped)"},
+        {"id": "min-five-toplan", "text": "At least 5 TOPLAN files exist under outputs/"},
+        {"id": "min-two-be", "text": "At least 2 TOPLAN files are tier BE"},
+        {"id": "min-two-fe", "text": "At least 2 TOPLAN files are tier FE"},
+        {"id": "filename-format", "text": "All TOPLAN filenames match NN-TOPLAN-{BE|FE|DEVOPS}-2026-05-03-<kebab>.md"},
+        {"id": "tier-number-alignment", "text": "BE files are 01-09, FE files are 10-19"},
+        {"id": "no-brainstormed-or-available", "text": "No BRAINSTORMED or AVAILABLE files were written"},
+        {"id": "transcript-states", "text": "transcript.md mentions all four lifecycle states"},
+        {"id": "transcript-gates", "text": "transcript.md mentions both gates"},
+        {"id": "no-implementation-claims", "text": "final.md does not claim implementation is complete"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "implicit-large-scope-no-trigger-words",
+      "prompt": "I want to add a notifications system. Users should see in-app toasts when something happens to them, get a bell icon with a dropdown showing recent notifications with read/unread state, and configure which event types they want emails for. We'll need a notifications table, a fan-out job, an SMTP integration, the bell component, the dropdown, and a settings page. We're on django + react.",
+      "expected_output": "Skill triggers despite no 'big plan' phrase; 6 deliverables → 5+ TOPLAN files with 2+ BE and 2+ FE; correct phase setup, no monolithic single design doc.",
+      "files": [],
+      "assertions": [
+        {"id": "trigger", "text": "INDEX.md exists somewhere under outputs/"},
+        {"id": "phase-progress-block", "text": "INDEX.md contains all three phase counters"},
+        {"id": "min-five-toplan", "text": "At least 5 TOPLAN files exist"},
+        {"id": "min-two-be", "text": "At least 2 TOPLAN files are tier BE"},
+        {"id": "min-two-fe", "text": "At least 2 TOPLAN files are tier FE"},
+        {"id": "filename-format", "text": "All TOPLAN filenames match the canonical format"},
+        {"id": "tier-number-alignment", "text": "BE files are 01-09, FE files are 10-19"},
+        {"id": "no-brainstormed-or-available", "text": "No BRAINSTORMED or AVAILABLE files"},
+        {"id": "no-implementation-claims", "text": "final.md does not claim implementation is complete"},
+        {"id": "no-monolithic-spec", "text": "Work is decomposed into separate slice files, not one combined design doc"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "single-deliverable-no-trigger",
+      "prompt": "Can you help me add a /healthz endpoint to our express app that returns 200 with the git sha and uptime?",
+      "expected_output": "Skill does NOT trigger; assistant goes direct (or invokes brainstorming) and produces a usable answer; no INDEX/TOPLAN orchestration overhead.",
+      "files": [],
+      "assertions": [
+        {"id": "no-trigger-no-index", "text": "No INDEX.md exists anywhere under outputs/"},
+        {"id": "no-toplan-files", "text": "No TOPLAN files exist anywhere under outputs/"},
+        {"id": "transcript-explains-skip", "text": "transcript.md states bigspec does not apply"},
+        {"id": "produced-real-answer", "text": "outputs/ contains the actual answer to the user's question"},
+        {"id": "concise-final", "text": "final.md is a direct answer, not orchestration"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "borderline-four-slices-no-trigger",
+      "prompt": "I want to let users export their data. We need an export job on the backend that zips up their records into a downloadable archive, and an API endpoint that returns a signed URL for the latest export. On the frontend, a settings panel with an 'Export my data' button, and a small status indicator that shows whether an export is in progress or ready to download. Stack is fastapi + svelte.",
+      "expected_output": "Skill does NOT trigger (4-slice case fails strict >4 threshold); transcript shows explicit count; no padding; falls back to brainstorming.",
+      "files": [],
+      "assertions": [
+        {"id": "no-trigger-no-index", "text": "No INDEX.md exists (or transcript explicitly says it would be skipped)"},
+        {"id": "no-toplan-files", "text": "Either no TOPLAN files exist, or exactly 4 (no padding to 5+)"},
+        {"id": "did-slice-math", "text": "transcript.md performs an explicit count of BE and FE slices"},
+        {"id": "explained-threshold", "text": "transcript.md states the threshold is strictly more than 4 (5+)"},
+        {"id": "no-fake-padding", "text": "transcript.md does not invent extra slices to clear the bar"},
+        {"id": "fell-back-to-brainstorming", "text": "transcript.md or final.md falls back to brainstorming"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "phase-flow-and-gates",
+      "prompt": "I'm planning to build a multi-tenant team chat app. Workspaces with members, channels per workspace, real-time messages over websockets, threaded replies, message search, file uploads to S3, an admin panel to manage members, a channel sidebar, the message timeline UI, and a search results page. Backend is go + postgres + redis, frontend is solid.js. This is a big delivery — let's plan it properly.",
+      "expected_output": "Skill triggers strongly; 8+ TOPLAN files; INDEX.md with all three phase counters; transcript names all four states, both gates, parallelism opt-in for plan phase, sequential default for implementation; nothing past Step 3.",
+      "files": [],
+      "assertions": [
+        {"id": "trigger", "text": "INDEX.md exists somewhere under outputs/"},
+        {"id": "phase-progress-block", "text": "INDEX.md contains all three phase counters"},
+        {"id": "min-eight-toplan", "text": "At least 8 TOPLAN files exist"},
+        {"id": "min-three-be", "text": "At least 3 TOPLAN files are tier BE"},
+        {"id": "min-three-fe", "text": "At least 3 TOPLAN files are tier FE"},
+        {"id": "filename-format", "text": "All TOPLAN filenames match canonical format"},
+        {"id": "tier-number-alignment", "text": "BE 01-09, FE 10-19"},
+        {"id": "transcript-all-four-states", "text": "transcript.md names TOPLAN, BRAINSTORMED, AVAILABLE, IMPLEMENTED"},
+        {"id": "transcript-both-gates", "text": "transcript.md mentions both gates"},
+        {"id": "transcript-parallelism-opt-in", "text": "transcript.md mentions plan-phase parallelism opt-in"},
+        {"id": "transcript-implementation-default", "text": "transcript.md mentions implementation defaults to sequential, parallel after audit"},
+        {"id": "no-brainstormed-or-available", "text": "No BRAINSTORMED or AVAILABLE files"},
+        {"id": "no-implementation-claims", "text": "final.md does not claim implementation is complete"},
+        {"id": "toplan-files-required-sections", "text": "TOPLAN files contain scope, out-of-scope, dependencies, contracts, open questions, success criterion sections"}
+      ]
+    }
+  ]
+}

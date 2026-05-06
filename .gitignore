@@ -1,0 +1,23 @@
+# Build artifacts — produced by skill-creator's package_skill.py
+*.skill
+
+# Local Claude Code settings (machine-specific permissions)
+.claude/settings.local.json
+
+# Eval workspace (large, regenerable from scripts in skill-creator)
+bigspec-workspace/
+
+# macOS noise
+.DS_Store
+
+# Editor noise
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python noise
+__pycache__/
+*.pyc
+.venv/
+venv/
